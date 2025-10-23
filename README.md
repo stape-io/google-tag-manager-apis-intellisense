@@ -21,7 +21,7 @@ https://github.com/user-attachments/assets/868bbe2c-3e28-47b1-b195-cdfc509ec340
 
 ### ✅ Recommended option
 
-This is the recommended way to keep your GTM API types up to date.
+This is the recommended option to keep your GTM API types **automatically updated**.
 
 1. Install the type definitions directly using a package manager like `npm` or `pnpm`:
     ```bash
@@ -94,7 +94,7 @@ This is the recommended way to keep your GTM API types up to date.
 
 ### 🚫 Not Recommended Option
 
-> ⚠️ If you chose this option you will not receive automatic updates, and you'll have to manually update the `.d.ts` files by copying and pasting them from this GitHub repository.
+> ⚠️ If you chose this option, **you will not receive automatic updates**, and you'll have to manually update the `.d.ts` files by copying and pasting them from this GitHub repository.
 
 Choose the file definition (`.d.ts` file) that corresponds to the environment you are developing for (Web or Server). Then, choose one of the following methods to activate IntelliSense.
 
