@@ -1,69 +1,87 @@
 # GTM Sandboxed API IntelliSense
 
-
 This guide explains how to use the provided TypeScript Declaration Files (`.d.ts`) to enable IntelliSense (autocompletion and hover-documentation) for Google Tag Manager's Sandboxed JavaScript APIs in your code editor.
 
-## Now Available as an npm Package!
-
-You can now install the type definitions directly from npm:
-
-```bash
-pnpm install -D stape-gtm-api-types
-# or
-npm install --save-dev stape-gtm-api-types
-```
-
-This is the recommended way to keep your GTM API types up to date.
-
-There are two type definition files included:
+There are two file definitions:
 - `server-gtm-sandboxed-apis.d.ts`: For **Server-side** GTM templates.
 - `web-gtm-sandboxed-apis.d.ts`: For **Web** GTM templates.
 
----
-
-## What Are These Files?
+## What Are These Definitions?
 
 Google Tag Manager's custom templates run in a "sandboxed" JavaScript environment that has a special set of APIs (like `copyFromDataLayer` or `sendHttpRequest`). Standard code editors don't know about these custom APIs, so they can't provide any help as you code.
 
-These `.d.ts` files act as a guide for your editor. They define the signatures, parameters, and documentation for every GTM API, effectively teaching your editor how the GTM environment works.
+These  files act as a guide for your editor. They define the signatures, parameters, and documentation for every GTM API, effectively teaching your editor how the GTM environment works.
 
 
 https://github.com/user-attachments/assets/868bbe2c-3e28-47b1-b195-cdfc509ec340
-
 
 ---
 
 ## How to Use
 
+1. Install the type definitions directly using a package manager like `npm` or `pnpm`:
+    ```bash
+    pnpm install -D stape-gtm-api-types
+    # or
+    npm install --save-dev stape-gtm-api-types
+    ```
 
-After installing the package, you can reference the type definitions in your project as follows:
+    This is the recommended way to keep your GTM API types up to date.
 
-### Method 1: Using a Triple-Slash Directive (File-by-File)
+2. After installing the package, you can reference the type definitions in your project as follows:
 
-Add a special comment to the **very top** of each JavaScript file where you want IntelliSense:
+    ### Method 1: Using a Triple-Slash Directive (File-by-File)
 
-```javascript
-/// <reference types="stape-gtm-api-types/web-gtm-sandboxed-apis" />
-// or
-/// <reference types="stape-gtm-api-types/server-gtm-sandboxed-apis" />
-```
+    This method is useful if you prefer not to create a `jsconfig.json` file. You must add a special comment to the **very top** of each JavaScript file containing GTM Sandboxed API code where you want IntelliSense.
 
-Choose the appropriate type for your environment (Web or Server).
+    Add a special comment to the **very top** of each JavaScript file where you want IntelliSense.
+    Make sure to add it exactly as is (with triple slashes).
 
-### Method 2: Using `jsconfig.json` or `tsconfig.json`
+    - For **Web** GTM Sandboxed APIs:
+    ```javascript
+    /// <reference types="stape-gtm-api-types/web-gtm-sandboxed-apis" />
 
-Add the package to your `jsconfig.json` or `tsconfig.json`:
+    // Your GTM template code starts here...
+    const copyFromDataLayer = require('copyFromDataLayer');
+    ```
 
-```json
-{
-  "compilerOptions": {
-  "typeRoots": ["./node_modules/stape-gtm-api-types"]
-  },
-  "include": ["**/*"]
-}
-```
+    - For **Server** GTM Sandboxed APIs:
+    ```javascript
+    /// <reference types="stape-gtm-api-types/server-gtm-sandboxed-apis" />
 
-Reload your editor if IntelliSense does not appear immediately.
+    // Your GTM template code starts here...
+    const getAllEventData = require('getAllEventData');
+    ```
+
+    ### Method 2: Using `jsconfig.json`
+
+    Create a `jsconfig.json` containing the following content in your project's root directory where the code of your template is located.
+
+    - For **Web** GTM Sandboxed APIs:
+    ```json
+    {
+      "compilerOptions": {
+        "paths": {
+          "*": ["./node_modules/stape-gtm-api-types/web-gtm-sandboxed-apis"]
+        }
+      },
+      "include": ["**/*"]
+    }
+    ```
+
+    - For **Server** GTM Sandboxed APIs:
+    ```json
+    {
+      "compilerOptions": {
+        "paths": {
+          "*": ["./node_modules/stape-gtm-api-types/server-gtm-sandboxed-apis"]
+        }
+      },
+      "include": ["**/*"]
+    }
+    ```
+
+3. Reload your editor if IntelliSense does not appear immediately.
 
 ---
 
@@ -72,15 +90,15 @@ Reload your editor if IntelliSense does not appear immediately.
 
 ### Visual Studio Code
 
-Both `jsconfig.json` and the triple-slash directive methods work perfectly. The npm package approach is recommended for easier updates and maintenance.
+Both methods work perfectly. The **Method 2** is recommended for easier updates and maintenance.
 
 ### JetBrains IDEs (WebStorm, IntelliJ IDEA, etc.)
 
-JetBrains IDEs will automatically index type definitions from installed npm packages. No manual copying required.
+JetBrains IDEs will automatically index type definitions from installed `npm` packages. No manual copying required.
 
 ### Other Editors (Sublime Text, Neovim, etc.)
 
-Other editors that support TypeScript/JavaScript language servers will automatically detect type definitions from npm packages.
+Other editors that support TypeScript/JavaScript language servers will automatically detect type definitions from `npm` packages.
 
 ---
 

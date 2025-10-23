@@ -1139,7 +1139,7 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_SERVER___
 
-/// <reference path="./server-gtm-sandboxed-apis.d.ts" />
+/// <reference types="stape-gtm-api-types/server-gtm-sandboxed-apis" />
 
 const BigQuery = require('BigQuery');
 const encodeUriComponent = require('encodeUriComponent');
