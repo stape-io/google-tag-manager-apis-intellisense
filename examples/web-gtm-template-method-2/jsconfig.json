@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "*": ["./node_modules/stape-gtm-api-types/web-gtm-sandboxed-apis"]
+    }
+  },
+  "include": ["**/*"]
+}

@@ -1,4 +1,4 @@
-/// <reference path="./server-gtm-sandboxed-apis.d.ts" />
+<reference types="stape-gtm-api-types/server-gtm-sandboxed-apis" />;
 
 const BigQuery = require('BigQuery');
 const encodeUriComponent = require('encodeUriComponent');
@@ -142,12 +142,16 @@ function getAddressFromEventData(eventData) {
   let eventDataUserDataAddress = {};
   const addressType = getType(eventDataUserData.address);
   if (addressType === 'object' || addressType === 'array') {
-    eventDataUserDataAddress = eventDataUserData.address[0] || eventDataUserData.address;
+    eventDataUserDataAddress =
+      eventDataUserData.address[0] || eventDataUserData.address;
   }
 
   const firstName =
-    eventDataUserDataAddress.first_name || eventDataUserDataAddress.sha256_first_name;
-  const lastName = eventDataUserDataAddress.last_name || eventDataUserDataAddress.sha256_last_name;
+    eventDataUserDataAddress.first_name ||
+    eventDataUserDataAddress.sha256_first_name;
+  const lastName =
+    eventDataUserDataAddress.last_name ||
+    eventDataUserDataAddress.sha256_last_name;
   const postalCode = eventDataUserDataAddress.postal_code;
   const regionCode = eventDataUserDataAddress.country;
 
@@ -163,7 +167,8 @@ function getAddressFromEventData(eventData) {
 
 function addConversionInformation(data, eventData, conversionEvent) {
   const getValueFromItems = (eventData) => {
-    if (getType(eventData.items) !== 'array' || eventData.items.length === 0) return;
+    if (getType(eventData.items) !== 'array' || eventData.items.length === 0)
+      return;
 
     let valueFromItems = 0;
     eventData.items.forEach((i) => {
@@ -184,17 +189,21 @@ function addConversionInformation(data, eventData, conversionEvent) {
     if (eventData.currency) conversionEvent.currency = eventData.currency;
 
     const conversionValue = eventData.value || getValueFromItems(eventData);
-    if (isValidValue(conversionValue)) conversionEvent.conversionValue = conversionValue;
+    if (isValidValue(conversionValue))
+      conversionEvent.conversionValue = conversionValue;
   }
 
-  if (data.transactionId) conversionEvent.transactionId = makeString(data.transactionId);
+  if (data.transactionId)
+    conversionEvent.transactionId = makeString(data.transactionId);
 
   if (data.eventTimestamp) {
     conversionEvent.eventTimestamp = getConversionDateTime(data.eventTimestamp);
   } else conversionEvent.eventTimestamp = getConversionDateTime();
 
   if (data.lastUpdatedTimestamp) {
-    conversionEvent.lastUpdatedTimestamp = getConversionDateTime(data.lastUpdatedTimestamp);
+    conversionEvent.lastUpdatedTimestamp = getConversionDateTime(
+      data.lastUpdatedTimestamp
+    );
   }
 
   if (data.currency) conversionEvent.currency = data.currency;
@@ -236,7 +245,9 @@ function addUserData(data, eventData, conversionEvent) {
       'userDataAddressRegion',
       'userDataAddressPostalCode'
     ];
-    const inputAllAddressFieldsAreValid = addressUIFields.every((p) => isValidValue(data[p]));
+    const inputAllAddressFieldsAreValid = addressUIFields.every((p) =>
+      isValidValue(data[p])
+    );
 
     if (inputAllAddressFieldsAreValid) {
       address = {
@@ -254,14 +265,18 @@ function addUserData(data, eventData, conversionEvent) {
     if (emailAddresses) {
       emailAddresses = itemizeUserIdentifier(emailAddresses);
       if (emailAddresses.length) {
-        emailAddresses.forEach((email) => userIdentifiers.push({ emailAddress: email }));
+        emailAddresses.forEach((email) =>
+          userIdentifiers.push({ emailAddress: email })
+        );
       }
     }
 
     if (phoneNumbers) {
       phoneNumbers = itemizeUserIdentifier(phoneNumbers);
       if (phoneNumbers.length) {
-        phoneNumbers.forEach((phone) => userIdentifiers.push({ phoneNumber: phone }));
+        phoneNumbers.forEach((phone) =>
+          userIdentifiers.push({ phoneNumber: phone })
+        );
       }
     }
 
@@ -289,12 +304,14 @@ function addAdIdentifiers(data, conversionEvent) {
   if (data.adIdentifiersWbraid) adIdentifiers.wbraid = data.adIdentifiersWbraid;
 
   if (data.adIdentifiersLandingPageDeviceInfoUserAgent) {
-    adIdentifiers.landingPageDeviceInfo = adIdentifiers.landingPageDeviceInfo || {};
+    adIdentifiers.landingPageDeviceInfo =
+      adIdentifiers.landingPageDeviceInfo || {};
     adIdentifiers.landingPageDeviceInfo.userAgent =
       data.adIdentifiersLandingPageDeviceInfoUserAgent;
   }
   if (data.adIdentifiersLandingPageDeviceInfoIpAddress) {
-    adIdentifiers.landingPageDeviceInfo = adIdentifiers.landingPageDeviceInfo || {};
+    adIdentifiers.landingPageDeviceInfo =
+      adIdentifiers.landingPageDeviceInfo || {};
     adIdentifiers.landingPageDeviceInfo.ipAddress =
       data.adIdentifiersLandingPageDeviceInfoIpAddress;
   }
@@ -313,13 +330,17 @@ function addEventDeviceInformation(data, eventData, conversionEvent) {
 
   if (isUIFieldTrue(data.autoMapEventDeviceInfo)) {
     if (eventData.user_agent) eventDeviceInfo.userAgent = eventData.user_agent;
-    if (eventData.ip_override) eventDeviceInfo.ipAddress = eventData.ip_override;
+    if (eventData.ip_override)
+      eventDeviceInfo.ipAddress = eventData.ip_override;
   }
 
-  if (data.eventDeviceInfoUserAgent) eventDeviceInfo.userAgent = data.eventDeviceInfoUserAgent;
-  if (data.eventDeviceInfoIpAddress) eventDeviceInfo.ipAddress = data.eventDeviceInfoIpAddress;
+  if (data.eventDeviceInfoUserAgent)
+    eventDeviceInfo.userAgent = data.eventDeviceInfoUserAgent;
+  if (data.eventDeviceInfoIpAddress)
+    eventDeviceInfo.ipAddress = data.eventDeviceInfoIpAddress;
 
-  if (hasProps(eventDeviceInfo)) conversionEvent.eventDeviceInfo = eventDeviceInfo;
+  if (hasProps(eventDeviceInfo))
+    conversionEvent.eventDeviceInfo = eventDeviceInfo;
 
   return conversionEvent;
 }
@@ -358,24 +379,31 @@ function addCartData(data, eventData, conversionEvent) {
     }
   }
 
-  if (data.cartDataMerchantId) cartData.merchantId = makeString(data.cartDataMerchantId);
+  if (data.cartDataMerchantId)
+    cartData.merchantId = makeString(data.cartDataMerchantId);
 
   if (data.cartDataMerchantFeedLabel) {
     cartData.merchantFeedLabel = makeString(data.cartDataMerchantFeedLabel);
   }
 
   if (data.cartDataMerchantFeedLanguageCode) {
-    cartData.merchantFeedLanguageCode = makeString(data.cartDataMerchantFeedLanguageCode);
+    cartData.merchantFeedLanguageCode = makeString(
+      data.cartDataMerchantFeedLanguageCode
+    );
   }
 
   if (isValidValue(data.cartDataTransactionDiscount)) {
     cartData.transactionDiscount = makeNumber(data.cartDataTransactionDiscount);
   }
 
-  if (getType(data.cartDataItems) === 'array' && data.cartDataItems.length > 0) {
+  if (
+    getType(data.cartDataItems) === 'array' &&
+    data.cartDataItems.length > 0
+  ) {
     cartData.items = data.cartDataItems.map((i) => {
       const item = {};
-      if (i.merchantProductId) item.merchantProductId = makeString(i.merchantProductId);
+      if (i.merchantProductId)
+        item.merchantProductId = makeString(i.merchantProductId);
       if (i.quantity) item.quantity = makeString(i.quantity);
       if (i.unitPrice) item.unitPrice = makeNumber(i.unitPrice);
       return item;
@@ -394,7 +422,10 @@ function addCustomVariables(data, conversionEvent) {
     data.customVariablesList.forEach((d) => {
       if (!isValidValue(d.value)) return;
 
-      const customVariable = { variable: makeString(d.name), value: makeString(d.value) };
+      const customVariable = {
+        variable: makeString(d.name),
+        value: makeString(d.value)
+      };
 
       if (d.destinationReferences) {
         const destinationReferences = (
@@ -413,7 +444,8 @@ function addCustomVariables(data, conversionEvent) {
       customVariables.push(customVariable);
     });
 
-    if (customVariables.length > 0) conversionEvent.customVariables = customVariables;
+    if (customVariables.length > 0)
+      conversionEvent.customVariables = customVariables;
   }
 
   return conversionEvent;
@@ -429,7 +461,8 @@ function addExperimentalFields(data, conversionEvent) {
       experimentalFields.push({ field: d.name, value: makeString(d.value) });
     });
 
-    if (experimentalFields.length > 0) conversionEvent.experimentalFields = experimentalFields;
+    if (experimentalFields.length > 0)
+      conversionEvent.experimentalFields = experimentalFields;
   }
 
   return conversionEvent;
@@ -569,7 +602,9 @@ function hashDataIfNeeded(mappedData) {
 function generateRequestUrl(data) {
   if (data.authFlow === 'own') {
     const apiVersion = '1';
-    return 'https://datamanager.googleapis.com/v' + apiVersion + '/events:ingest';
+    return (
+      'https://datamanager.googleapis.com/v' + apiVersion + '/events:ingest'
+    );
   }
 
   const containerIdentifier = getRequestHeader('x-gtm-identifier');
@@ -599,7 +634,8 @@ function generateRequestOptions(data) {
       scopes: ['https://www.googleapis.com/auth/datamanager']
     });
     options.authorization = auth;
-    if (data.xGoogUserProject) options.headers['x-goog-user-project'] = data.xGoogUserProject;
+    if (data.xGoogUserProject)
+      options.headers['x-goog-user-project'] = data.xGoogUserProject;
   }
 
   return options;
@@ -637,7 +673,11 @@ function sendRequest(data, mappedData) {
     RequestBody: requestBody
   });
 
-  return sendHttpRequest(requestUrl, requestOptions, JSON.stringify(requestBody))
+  return sendHttpRequest(
+    requestUrl,
+    requestOptions,
+    JSON.stringify(requestBody)
+  )
     .then((result) => {
       // .then has to be used when the Authorization header is in use
       log({
@@ -824,8 +864,10 @@ function isConsentGivenOrNotRequired(data, eventData) {
 
 function log(rawDataToLog) {
   const logDestinationsHandlers = {};
-  if (determinateIsLoggingEnabled()) logDestinationsHandlers.console = logConsole;
-  if (determinateIsLoggingEnabledForBigQuery()) logDestinationsHandlers.bigQuery = logToBigQuery;
+  if (determinateIsLoggingEnabled())
+    logDestinationsHandlers.console = logConsole;
+  if (determinateIsLoggingEnabledForBigQuery())
+    logDestinationsHandlers.bigQuery = logToBigQuery;
 
   const keyMappings = {
     // No transformation for Console is needed.

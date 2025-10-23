@@ -1,4 +1,4 @@
-/// <reference path="./web-gtm-sandboxed-apis.d.ts" />
+/// <reference types="stape-gtm-api-types/web-gtm-sandboxed-apis" />
 
 const callInWindow = require('callInWindow');
 const copyFromWindow = require('copyFromWindow');

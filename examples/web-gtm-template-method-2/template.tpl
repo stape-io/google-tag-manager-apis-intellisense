@@ -352,8 +352,6 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-/// <reference path="./web-gtm-sandboxed-apis.d.ts" />
-
 const callInWindow = require('callInWindow');
 const copyFromWindow = require('copyFromWindow');
 const getContainerVersion = require('getContainerVersion');
