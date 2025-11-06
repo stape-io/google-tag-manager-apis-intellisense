@@ -1,6 +1,7 @@
 # GTM Custom Template Examples Intellisense implementation
 
-This directory contains example implementation of the Intellisense for GTM Custom Templates for Google Tag Manager, for both the **✅ Recommended** and **🚫 Not Recommended** Options.
+This directory contains example implementation of the Intellisense for GTM Custom Templates for Google Tag Manager, for both the **✅ [Recommended](./recommended-option/)** and **🚫 [Not Recommended](./not-recommended-option/)** Options.
+
 Please, use the **✅ Recommended Option**.
 
 For detailed information on how to use these examples, please refer to the main [README](../README.md).

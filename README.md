@@ -23,14 +23,14 @@ https://github.com/user-attachments/assets/868bbe2c-3e28-47b1-b195-cdfc509ec340
 
 This is the recommended option to keep your GTM API types **automatically updated**.
 
-1. Install the type definitions directly using a package manager like `npm` or `pnpm`:
+1. Install the type definitions directly using a package manager like `npm` or `pnpm` in the root of the folder that contains your GTM template JavaScript file:
     ```bash
     pnpm install -D stape-gtm-api-types
     # or
     npm install --save-dev stape-gtm-api-types
     ```
 
-    If you don't have one of them installed, you can follow the installation instructions:
+    If you don't have one of them installed, you can follow the installation instructions. Choose your prefered package manager and install one of them:
       - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
       - [`pnpm`](https://pnpm.io/installation)
 
@@ -38,7 +38,7 @@ This is the recommended option to keep your GTM API types **automatically update
 
     #### Method 1: Using a Triple-Slash Directive (File-by-File)
 
-    This method is useful if you prefer not to create a `jsconfig.json` file.
+    This method is useful if you prefer not to create a `jsconfig.json` file (as described in the Method 2 below).
 
     You must add a special comment to the **very top** of each JavaScript file containing GTM Sandboxed API code where you want IntelliSense.
 
@@ -61,7 +61,7 @@ This is the recommended option to keep your GTM API types **automatically update
     const getAllEventData = require('getAllEventData');
     ```
 
-    #### Method 2: Using `jsconfig.json`
+    #### Method 2: Using `jsconfig.json` (Project-Wide)
 
     Create a `jsconfig.json` containing the following content in your project's root directory where the code of your template is located.
 
@@ -91,6 +91,13 @@ This is the recommended option to keep your GTM API types **automatically update
 
 3. Reload your editor if IntelliSense does not appear immediately.
 
+4. Make sure to periodically run the following command in the folder that contains your GTM template JavaScript files:
+
+```bash
+npm update
+# or
+pnpm update
+```
 
 ### 🚫 Not Recommended Option
 
