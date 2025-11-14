@@ -1,6 +1,6 @@
 {
   "name": "stape-gtm-api-types",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Type definitions for Google Tag Manager sandboxed APIs (server and web)",
   "author": "stape-io",
   "license": "Apache-2.0",
