@@ -926,6 +926,10 @@ declare module 'templateStorage' {
   /**
    * An object with methods for accessing template storage, which persists for the lifetime of the page.
    * Note: Unlike Web Storage, this API does not serialize data into strings; it stores and returns references.
+     *
+     * ---
+     *
+     * @see {@link https://developers.google.com/tag-platform/tag-manager/templates/api#templatestorage Google Tag Manager APIs Reference}
    */
   const templateStorage: {
     /**
