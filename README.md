@@ -3,6 +3,7 @@
 This guide explains how to use the provided TypeScript Declaration Files (`.d.ts`) to enable IntelliSense (autocompletion and hover-documentation) for Google Tag Manager's Sandboxed JavaScript APIs in your code editor.
 
 There are two file definitions:
+
 - `server-gtm-sandboxed-apis.d.ts`: For **Server-side** GTM templates.
 - `web-gtm-sandboxed-apis.d.ts`: For **Web** GTM templates.
 
@@ -10,8 +11,7 @@ There are two file definitions:
 
 Google Tag Manager's custom templates run in a "sandboxed" JavaScript environment that has a special set of APIs (like `copyFromDataLayer` or `sendHttpRequest`). Standard code editors don't know about these custom APIs, so they can't provide any help as you code.
 
-These  files act as a guide for your editor. They define the signatures, parameters, and documentation for every GTM API, effectively teaching your editor how the GTM environment works.
-
+These files act as a guide for your editor. They define the signatures, parameters, and documentation for every GTM API, effectively teaching your editor how the GTM environment works.
 
 https://github.com/user-attachments/assets/868bbe2c-3e28-47b1-b195-cdfc509ec340
 
@@ -24,70 +24,73 @@ https://github.com/user-attachments/assets/868bbe2c-3e28-47b1-b195-cdfc509ec340
 This is the recommended option to keep your GTM API types **automatically updated**.
 
 1. Install the type definitions directly using a package manager like `npm` or `pnpm` in the root of the folder that contains your GTM template JavaScript file:
-    ```bash
-    pnpm install -D stape-gtm-api-types
-    # or
-    npm install --save-dev stape-gtm-api-types
-    ```
 
-    If you don't have one of them installed, you can follow the installation instructions. Choose your prefered package manager and install one of them:
-      - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-      - [`pnpm`](https://pnpm.io/installation)
+   ```bash
+   pnpm install -D stape-gtm-api-types
+   # or
+   npm install --save-dev stape-gtm-api-types
+   ```
+
+   If you don't have one of them installed, you can follow the installation instructions. Choose your prefered package manager and install one of them:
+   - [`npm`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+   - [`pnpm`](https://pnpm.io/installation)
 
 2. After installing the package, you can reference the type definitions in your project as follows:
 
-    #### Method 1: Using a Triple-Slash Directive (File-by-File)
+   #### Method 1: Using a Triple-Slash Directive (File-by-File)
 
-    This method is useful if you prefer not to create a `jsconfig.json` file (as described in the Method 2 below).
+   This method is useful if you prefer not to create a `jsconfig.json` file (as described in the Method 2 below).
 
-    You must add a special comment to the **very top** of each JavaScript file containing GTM Sandboxed API code where you want IntelliSense.
+   You must add a special comment to the **very top** of each JavaScript file containing GTM Sandboxed API code where you want IntelliSense.
 
-    Add a special comment to the **very top** of each JavaScript file where you want IntelliSense.
-    Make sure to add it exactly as is (with triple slashes).
+   Add a special comment to the **very top** of each JavaScript file where you want IntelliSense.
+   Make sure to add it exactly as is (with triple slashes).
+   - For **Web** GTM Sandboxed APIs:
 
-    - For **Web** GTM Sandboxed APIs:
-    ```javascript
-    /// <reference types="stape-gtm-api-types/web-gtm-sandboxed-apis" />
+   ```javascript
+   /// <reference types="stape-gtm-api-types/web-gtm-sandboxed-apis" />
 
-    // Your GTM template code starts here...
-    const copyFromDataLayer = require('copyFromDataLayer');
-    ```
+   // Your GTM template code starts here...
+   const copyFromDataLayer = require('copyFromDataLayer');
+   ```
 
-    - For **Server** GTM Sandboxed APIs:
-    ```javascript
-    /// <reference types="stape-gtm-api-types/server-gtm-sandboxed-apis" />
+   - For **Server** GTM Sandboxed APIs:
 
-    // Your GTM template code starts here...
-    const getAllEventData = require('getAllEventData');
-    ```
+   ```javascript
+   /// <reference types="stape-gtm-api-types/server-gtm-sandboxed-apis" />
 
-    #### Method 2: Using `jsconfig.json` (Project-Wide)
+   // Your GTM template code starts here...
+   const getAllEventData = require('getAllEventData');
+   ```
 
-    Create a `jsconfig.json` containing the following content in your project's root directory where the code of your template is located.
+   #### Method 2: Using `jsconfig.json` (Project-Wide)
 
-    - For **Web** GTM Sandboxed APIs:
-    ```json
-    {
-      "compilerOptions": {
-        "paths": {
-          "*": ["./node_modules/stape-gtm-api-types/web-gtm-sandboxed-apis"]
-        }
-      },
-      "include": ["**/*"]
-    }
-    ```
+   Create a `jsconfig.json` containing the following content in your project's root directory where the code of your template is located.
+   - For **Web** GTM Sandboxed APIs:
 
-    - For **Server** GTM Sandboxed APIs:
-    ```json
-    {
-      "compilerOptions": {
-        "paths": {
-          "*": ["./node_modules/stape-gtm-api-types/server-gtm-sandboxed-apis"]
-        }
-      },
-      "include": ["**/*"]
-    }
-    ```
+   ```json
+   {
+     "compilerOptions": {
+       "paths": {
+         "*": ["./node_modules/stape-gtm-api-types/web-gtm-sandboxed-apis"]
+       }
+     },
+     "include": ["**/*"]
+   }
+   ```
+
+   - For **Server** GTM Sandboxed APIs:
+
+   ```json
+   {
+     "compilerOptions": {
+       "paths": {
+         "*": ["./node_modules/stape-gtm-api-types/server-gtm-sandboxed-apis"]
+       }
+     },
+     "include": ["**/*"]
+   }
+   ```
 
 3. Reload your editor if IntelliSense does not appear immediately.
 
@@ -114,6 +117,7 @@ You must add a special comment to the **very top** of each JavaScript file where
 1.  **Place the `.d.ts` file** in your project directory (e.g., in the same folder as your `.js` file).
 2.  **Add the following comment** to the first line of your JavaScript file containing GTM Sandboxed API code where you want IntelliSense. Make sure to add it exactly as is (with triple slashes):
     - For **Web** GTM Sandboxed APIs:
+
     ```javascript
     /// <reference path="./web-gtm-sandboxed-apis.d.ts" />
 
@@ -122,12 +126,14 @@ You must add a special comment to the **very top** of each JavaScript file where
     ```
 
     - For **Server** GTM Sandboxed APIs:
+
     ```javascript
     /// <reference path="./server-gtm-sandboxed-apis.d.ts" />
 
     // Your GTM template code starts here...
     const getAllEventData = require('getAllEventData');
     ```
+
 3.  **Adjust the path**: make sure the `path` in the comment correctly points to the location of your `.d.ts` file relative to your JavaScript file.
 
 #### Method 2: Using `jsconfig.json`
@@ -151,7 +157,6 @@ This is a modern and reliable method for any project, even if it's just a single
 
 ## Editor-Specific Instructions
 
-
 ### Visual Studio Code
 
 Both methods work perfectly. The **Method 2** is recommended for easier updates and maintenance.
@@ -173,8 +178,12 @@ For tag configuration examples, please refer to the [/examples](./examples) fold
 ---
 
 ## Authors
+
 Created and developed by **Giovani Ortolani Barbosa** ([LinkedIn](https://linkedin.com/in/giovani-ortolani-barbosa/), [GitHub](https://github.com/giovaniortolani)).
 
+## Useful Resources:
+
+- [Step-by-step guide on how to configure GTM Sandboxed API IntelliSense](https://stape.io/helpdesk/documentation/gtm-sandboxed-api-intellisense)
 
 ## Open Source
 
